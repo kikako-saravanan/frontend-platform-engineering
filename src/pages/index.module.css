@@ -1,0 +1,119 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  padding: 2rem 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.content h2 {
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--ifm-color-primary);
+  padding-bottom: 0.5rem;
+}
+
+.content h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.content ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.learningFlow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--ifm-background-surface);
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flowStep {
+  background: var(--ifm-color-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.flowArrow {
+  font-size: 1.5rem;
+  color: var(--ifm-color-primary);
+  font-weight: bold;
+  line-height: 1;
+}
+
+.phaseSection {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--ifm-background-surface);
+  border-radius: 8px;
+  border-left: 4px solid var(--ifm-color-primary);
+}
+
+.quote {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--ifm-color-primary-lightest);
+  border-left: 4px solid var(--ifm-color-primary);
+  font-style: italic;
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--ifm-font-color);
+}
+
+[data-theme='dark'] .quote {
+  background: rgba(129, 140, 248, 0.15);
+  color: #e0e7ff;
+}
+
+@media screen and (max-width: 768px) {
+  .phaseSection {
+    padding: 1rem;
+  }
+}

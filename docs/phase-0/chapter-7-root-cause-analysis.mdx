@@ -1,0 +1,434 @@
+# Chapter 7 — Root Cause Analysis — Solving the Right Problem
+
+Fix the cause, not the symptom.
+
+This chapter is one of the most valuable skills you'll ever develop.
+
+If someone gave me two engineers:
+
+**Engineer A**
+- Knows React perfectly.
+
+**Engineer B**
+- Knows debugging and Root Cause Analysis perfectly.
+
+I'd hire Engineer B.
+
+Why?
+
+Because technologies change.
+
+Problem-solving doesn't.
+
+## Why This Chapter Exists
+
+Imagine you're a doctor.
+
+A patient comes in.
+
+He says:
+
+"I have a headache."
+
+Question.
+
+Should the doctor immediately give painkillers?
+
+Maybe.
+
+But what if the headache is caused by:
+
+- High blood pressure?
+- Brain injury?
+- Dehydration?
+- Lack of sleep?
+- Eye strain?
+
+The headache is not the problem.
+
+It is a symptom.
+
+Software behaves exactly the same way.
+
+## First Principle
+
+Let's ask the most important question.
+
+Why do bugs exist?
+
+Most people answer:
+
+Because the code is wrong.
+
+Not always.
+
+Let's go deeper.
+
+A bug appears because:
+
+Something unexpected happened.
+
+Now ask: Why?
+
+Eventually you'll find:
+
+- A decision
+- An assumption
+- A misunderstanding
+- Or a missing constraint
+
+That is the root cause.
+
+## Symptoms vs Root Causes
+
+Imagine this:
+
+Your website is slow.
+
+Is that the root cause?
+
+No.
+
+That's only the symptom.
+
+Possible root causes:
+
+```
+Large images
+  ↓
+Too many API calls
+  ↓
+Slow database
+  ↓
+Large JavaScript bundle
+  ↓
+Blocking CSS
+  ↓
+Infinite rendering
+  ↓
+Memory leak
+```
+
+The symptom "Website is slow" doesn't tell you which problem exists.
+
+## The Iceberg Model
+
+Think of an iceberg:
+
+```
+               Water Surface
+────────────────────────────────
+
+      🚨 Error
+      Crash
+      Bug
+      Slow UI
+
+────────────────────────────────
+
+      Wrong Assumption
+      Bad Architecture
+      Hidden Dependency
+      Race Condition
+      Missing Validation
+      Design Flaw
+```
+
+Users only see the top.
+
+Engineers investigate below the water.
+
+## The Five Whys
+
+Toyota popularized a simple technique.
+
+Whenever something goes wrong, keep asking:
+
+**Why?**
+
+Example:
+
+**Problem:** Website crashed.
+
+**Why?** → Server ran out of memory.
+
+**Why?** → Memory leak.
+
+**Why?** → Objects never released.
+
+**Why?** → Event listeners weren't removed.
+
+**Why?** → Developer forgot cleanup.
+
+Now we've reached something actionable.
+
+## Frontend Example
+
+Suppose:
+
+Button doesn't update.
+
+**Junior engineer:**
+```
+Button broken.
+```
+
+**Senior engineer:**
+```
+Why didn't it update?
+  ↓
+State didn't change.
+  ↓
+Why?
+  ↓
+API returned old data.
+  ↓
+Why?
+  ↓
+Cache wasn't invalidated.
+  ↓
+Why?
+  ↓
+Wrong cache key.
+```
+
+Now we've found the real issue.
+
+## Example From Your Own Experience
+
+Let's use something you've actually worked on.
+
+Remember the Module Federation issue.
+
+The symptom was:
+
+Hard refresh sometimes failed for the Vite remote.
+
+You could have stopped there.
+
+Instead, you investigated.
+
+You found:
+
+- The host and remote didn't always share the same React instance.
+- The shared module cache wasn't populated before the remote bootstrap executed.
+- The fallback path loaded another React copy.
+
+The visible symptom was "hard refresh fails."
+
+The root cause was the timing of shared dependency initialization.
+
+That's the mindset we want to build.
+
+## Why Root Causes Matter
+
+Imagine treating only symptoms.
+
+Example:
+
+Application crashes.
+
+You restart it.
+
+Crash disappears.
+
+Good?
+
+No.
+
+Because the root cause still exists.
+
+Tomorrow, it crashes again.
+
+This is why experienced engineers don't celebrate when the error disappears.
+
+They celebrate when they understand why it disappeared.
+
+## Root Cause vs Blame
+
+This is very important.
+
+Root Cause Analysis is not about asking:
+
+**"Who made the mistake?"**
+
+It asks:
+
+**"What conditions allowed this mistake to happen?"**
+
+This difference creates a learning culture instead of a blame culture.
+
+## Root Cause Formula
+
+Whenever something fails, follow this path:
+
+```
+Symptom
+      ↓
+Observation
+      ↓
+Evidence
+      ↓
+Hypothesis
+      ↓
+Experiment
+      ↓
+Root Cause
+      ↓
+Permanent Fix
+```
+
+Notice something.
+
+We don't jump from:
+
+```
+Symptom
+  ↓
+Fix
+```
+
+We investigate first.
+
+## Evidence Before Assumptions
+
+Suppose:
+
+Page loads slowly.
+
+**Wrong approach:**
+"It must be React."
+
+**Better approach:**
+- Measure.
+- Use DevTools.
+- Check the Network panel.
+- Check Performance.
+- Check Memory.
+
+Collect evidence.
+
+Then conclude.
+
+## Permanent Fixes
+
+Suppose:
+
+You keep seeing:
+
+```
+Cannot read property 'name'
+```
+
+**Temporary fix:**
+
+```javascript
+if(user){}
+```
+
+**Permanent fix:**
+
+Why is user undefined?
+
+Should it ever be?
+
+Fix the source, not every place it appears.
+
+## Mental Model
+
+Imagine a tree:
+
+```
+Leaves
+  ↓
+Branches
+  ↓
+Trunk
+  ↓
+Roots
+```
+
+Symptoms are the leaves.
+
+The root cause is literally the roots.
+
+You don't heal a dying tree by painting the leaves green.
+
+You fix the roots.
+
+Software works the same way.
+
+## Common Mistakes
+
+❌ Fixing the first thing that appears broken.
+
+❌ Assuming instead of measuring.
+
+❌ Blaming people instead of investigating systems.
+
+❌ Stopping after the first explanation.
+
+❌ Never asking "Why?" more than once.
+
+## Root Cause Analysis in Large Companies
+
+Companies like Google, Amazon, Microsoft, and many others often perform a post-incident review after significant outages.
+
+The goal is not to identify someone to blame.
+
+Typical questions include:
+
+- What happened?
+- What was the impact?
+- Why did it happen?
+- Why wasn't it detected sooner?
+- Why didn't existing safeguards prevent it?
+- What changes will prevent it from happening again?
+
+Notice that these questions focus on improving the system, not assigning fault.
+
+## Key Principles
+
+- Symptoms are not root causes.
+- Evidence is more valuable than assumptions.
+- Keep asking "Why?" until you reach a fundamental cause.
+- Fix the system, not just the visible error.
+- Learn from incidents instead of assigning blame.
+
+## Chapter Summary
+
+Root Cause Analysis is the discipline of moving beyond visible symptoms to identify and address the underlying reason a problem exists.
+
+Great engineers do not stop when an error disappears—they stop when they understand why it occurred and have confidence it won't happen again under the same conditions.
+
+This mindset leads to more reliable software, stronger systems, and better engineering decisions.
+
+## Assignment
+
+### Part 1 — Investigate a Real Bug
+
+Think of a bug you've encountered in your work (for example, the Module Federation hard refresh issue or any other issue you've faced).
+
+Apply the Five Whys technique:
+
+1. What was the symptom?
+2. Why did it occur?
+3. Why did that occur?
+4. Why did that occur?
+5. Why did that occur?
+
+Document your findings.
+
+### Part 2 — Analyze an Incident
+
+Research a major software outage from a company like Google, Amazon, or Microsoft.
+
+Find information about their post-incident review and answer:
+
+- What happened?
+- What was the impact?
+- Why did it happen?
+- Why wasn't it detected sooner?
+- What changes were made to prevent recurrence?
+
+Compare their approach to the blame-based approach.

@@ -1,0 +1,50 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#card-gradient)" />
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="150" fill="#667eea" opacity="0.1" />
+  <circle cx="1100" cy="530" r="200" fill="#764ba2" opacity="0.1" />
+  
+  <!-- Platform layers representation -->
+  <rect x="100" y="200" width="400" height="30" rx="6" fill="url(#bg-gradient)" opacity="0.8" />
+  <rect x="120" y="250" width="360" height="30" rx="6" fill="url(#bg-gradient)" opacity="0.6" />
+  <rect x="140" y="300" width="320" height="30" rx="6" fill="url(#bg-gradient)" opacity="0.4" />
+  
+  <!-- Code brackets -->
+  <path d="M80 180 L60 200 L60 430 L80 450" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.3" />
+  <path d="M520 180 L540 200 L540 430 L520 450" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.3" />
+  
+  <!-- Title -->
+  <text x="650" y="280" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#ffffff">
+    Front End Platform
+  </text>
+  <text x="650" y="360" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#ffffff">
+    Engineering
+  </text>
+  
+  <!-- Tagline -->
+  <text x="650" y="420" font-family="Arial, sans-serif" font-size="28" fill="#a5b4fc">
+    Learning based on first principles
+  </text>
+  
+  <!-- Small logo icon -->
+  <g transform="translate(1050, 80)">
+    <circle cx="0" cy="0" r="40" fill="#667eea" opacity="0.2" />
+    <path d="M-20 -20 L-25 -15 L-25 15 L-20 20" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" />
+    <path d="M20 -20 L25 -15 L25 15 L20 20" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" />
+    <rect x="-15" y="-8" width="30" height="6" rx="2" fill="#fff" />
+    <rect x="-15" y="2" width="20" height="6" rx="2" fill="#fff" opacity="0.7" />
+  </g>
+</svg>

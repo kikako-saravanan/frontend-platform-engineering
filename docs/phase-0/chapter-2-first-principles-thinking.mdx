@@ -1,0 +1,425 @@
+# Chapter 2 — First Principles Thinking
+
+Don't ask what people built. Ask why they had to build it.
+
+## Why This Chapter Exists
+
+Most developers learn software like this:
+
+```
+React
+  ↓
+Redux
+  ↓
+Next.js
+  ↓
+Tailwind
+  ↓
+Vite
+```
+
+Every technology is treated as something to memorize.
+
+But engineers think differently.
+
+They ask:
+
+**"If React didn't exist, could I invent it?"**
+
+That is the purpose of this chapter.
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+
+- Understand what first-principles thinking is.
+- Differentiate first-principles thinking from reasoning by analogy.
+- Derive engineering solutions from problems.
+- Apply first-principles thinking to frontend engineering.
+- Use this thinking process when learning any new technology.
+
+## Part 1 — Two Ways Humans Think
+
+There are two common ways people solve problems.
+
+### Method 1 — Reasoning by Analogy
+
+This is the most common.
+
+It means:
+
+"Someone else solved this problem. I'll do the same thing."
+
+Example:
+
+Your company needs authentication.
+
+You search GitHub.
+
+You find a tutorial.
+
+You copy it.
+
+You solved the problem.
+
+But did you understand it?
+
+Not necessarily.
+
+**Advantages**
+- Fast
+- Practical
+- Good for common problems
+
+**Disadvantages**
+- Doesn't build deep understanding
+- Hard to solve new problems
+- Easy to copy mistakes
+- Difficult to innovate
+
+### Method 2 — First Principles Thinking
+
+Instead of asking:
+
+"How did others solve this?"
+
+You ask:
+
+**"What are the fundamental truths?"**
+
+Then you rebuild the solution from those truths.
+
+### Example 1 — Building a Chair
+
+Imagine chairs never existed.
+
+How would you invent one?
+
+Don't think about furniture stores.
+
+Think from scratch.
+
+What do humans need?
+
+- A way to rest.
+- A stable surface.
+- Comfortable height.
+- Support for body weight.
+
+From those truths, you might invent something like this:
+
+```
+Seat
+  +
+Support
+  +
+Stability
+```
+
+Congratulations.
+
+You just invented a chair.
+
+You didn't copy one.
+
+You derived one.
+
+### Engineering Works the Same Way
+
+Let's imagine React never existed.
+
+How would we invent it?
+
+We don't know yet.
+
+But we can ask:
+
+What problems do web developers have?
+
+Examples:
+
+- Repeating UI code
+- Keeping UI in sync with data
+- Managing state
+- Updating only changed parts of the page
+
+Those problems eventually lead us toward React.
+
+Notice:
+
+We didn't start with JSX.
+
+We started with problems.
+
+## The First-Principles Formula
+
+Whenever you learn something new, use this process:
+
+```
+Existing Technology
+        ↓
+Ignore It
+        ↓
+Find the Real Problem
+        ↓
+Identify Constraints
+        ↓
+List Fundamental Truths
+        ↓
+Build the Simplest Possible Solution
+        ↓
+Improve It
+```
+
+This is how we'll approach every major topic in this course.
+
+### Example 2 — Why Does HTML Exist?
+
+Let's pretend HTML never existed.
+
+Question:
+
+How can one computer send a document to another computer?
+
+We need:
+
+- Text
+- Headings
+- Paragraphs
+- Lists
+- Links
+- Images
+
+Plain text cannot describe structure.
+
+So we invent a way to mark meaning.
+
+Example:
+
+```
+This is a heading.
+This is a paragraph.
+This is a list.
+```
+
+Computers need structure.
+
+Eventually someone invents tags:
+
+```
+<h1>
+<p>
+<ul>
+```
+
+Notice what happened.
+
+We didn't memorize HTML.
+
+We derived why HTML had to exist.
+
+### Example 3 — Why Does CSS Exist?
+
+Now HTML exists.
+
+Problem solved?
+
+No.
+
+Every page looks like plain text.
+
+New problem:
+
+People want beautiful documents.
+
+Fundamental truths:
+
+- Colors should change.
+- Fonts should change.
+- Layout should change.
+- Content should stay the same.
+
+So we separate Structure from Presentation.
+
+That separation becomes CSS.
+
+### Example 4 — Why Does JavaScript Exist?
+
+Now HTML and CSS exist.
+
+Problem solved?
+
+Still no.
+
+The page cannot respond to user actions.
+
+We need:
+
+- Click buttons
+- Submit forms
+- Update content
+- Validate input
+
+Static documents become interactive applications.
+
+This requirement leads to JavaScript.
+
+Again, the problem came first.
+
+### Example 5 — Why Does React Exist?
+
+Now we have JavaScript.
+
+Everything works.
+
+Until applications become large.
+
+Imagine updating hundreds of DOM elements manually.
+
+Problem:
+
+Keeping UI synchronized with changing data becomes difficult.
+
+Fundamental truths:
+
+- Data changes frequently.
+- UI should always reflect data.
+- Repeated DOM manipulation is error-prone.
+- Reusable UI blocks reduce duplication.
+
+These truths naturally lead toward component-based UI and declarative rendering.
+
+That journey eventually becomes React.
+
+## Mental Model
+
+Think of software evolution like climbing a mountain:
+
+```
+Problem
+   │
+   ▼
+Solution
+   │
+   ▼
+New Problem
+   │
+   ▼
+Better Solution
+   │
+   ▼
+New Problem
+```
+
+Every technology solves one layer of problems while creating opportunities and challenges for the next layer.
+
+## First Principles vs Memorization
+
+Suppose someone asks:
+
+**"Why does CSS have variables?"**
+
+**Memorization**
+"Because CSS supports variables."
+
+**First Principles**
+Hardcoding values causes duplication.
+
+Changing a color requires editing many files.
+
+Repeated decisions should become reusable values.
+
+Therefore, variables naturally emerge.
+
+One answer explains syntax.
+
+The other explains engineering.
+
+## The Five Questions Every Engineer Should Ask
+
+Whenever you encounter a new technology:
+
+1. What problem existed before this?
+2. Why wasn't the previous solution enough?
+3. What are the fundamental truths?
+4. What trade-offs does this introduce?
+5. If this disappeared tomorrow, could I rebuild it?
+
+These five questions will become our habit throughout the course.
+
+## Common Mistakes
+
+❌ Memorizing APIs without understanding the problem.
+
+❌ Assuming the newest technology is automatically better.
+
+❌ Copying architecture from blogs without understanding constraints.
+
+❌ Believing there is one perfect solution.
+
+## Real Engineering Example
+
+Suppose your manager says:
+
+"Let's migrate to React."
+
+A first-principles engineer asks:
+
+- What problem are we solving?
+- Is the current solution failing?
+- What constraints do we have?
+- What will migration cost?
+- What benefits justify the change?
+
+The decision comes from reasoning, not popularity.
+
+## Chapter Summary
+
+First-principles thinking means reducing a problem to its fundamental truths and building a solution from there instead of copying existing solutions.
+
+It encourages understanding over memorization and helps engineers reason about technologies, not just use them.
+
+Throughout this course, we will repeatedly ask why before learning how.
+
+## Key Takeaways
+
+- First principles start with truths, not tools.
+- Technologies exist because they solved real problems.
+- Every solution introduces new trade-offs.
+- Understanding "why" is more valuable than memorizing "how."
+- Great engineers can derive solutions instead of only copying them.
+
+## Assignments
+
+### Assignment 1
+
+Choose one of the following technologies:
+
+- HTML
+- CSS
+- JavaScript
+- React
+- TypeScript
+- Git
+
+Without reading documentation, write:
+
+- What problem do you think it solves?
+- What fundamental truths led to its creation?
+- What trade-offs might it introduce?
+
+### Assignment 2
+
+Pick an everyday object:
+
+- Bicycle
+- Pen
+- Backpack
+- Traffic Light
+- Elevator
+
+Use first-principles thinking to explain why it exists.
+
+Do not describe how it works.
+
+Describe the problem it solves and the fundamental truths that led to its design.

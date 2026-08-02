@@ -1,0 +1,128 @@
+# Glossary
+
+## First Principles
+
+Don't ask:
+
+"What is cohesion?"
+
+Ask:
+
+"Why do we organize anything at all?"
+
+Everything starts there.
+
+Cohesion is how strongly the parts of a module belong together because they contribute to the same responsibility or purpose.
+
+High cohesion means:
+
+```
+One Purpose
+      │
+      ▼
+Related Functions
+      │
+      ▼
+Easy to Understand
+Easy to Test
+Easy to Change
+```
+
+Low cohesion means:
+
+```
+Many Unrelated Purposes
+          │
+          ▼
+Confusing Code
+Hard to Maintain
+Changes Affect Everything
+```
+
+## First Principles
+
+Don't ask:
+
+"What is coupling?"
+
+Ask:
+
+"Why can independent things exist?"
+
+### The Definition (Derived)
+
+Coupling is how much one component depends on the internal details of another component.
+
+The more knowledge one part needs about another, the higher the coupling.
+
+These are often confused.
+
+### Imagine a Hospital
+
+**Cohesion**
+
+Inside the Cardiology department, everything is about the heart.
+
+```
+Heart Doctors
+Heart Equipment
+Heart Patients
+```
+
+Everything belongs together.
+
+High cohesion.
+
+**Coupling**
+
+How much does Cardiology depend on Neurology?
+
+Ideally, very little.
+
+Each department works independently.
+
+Low coupling.
+
+### The Golden Rule
+
+Good software has:
+
+```
+High Cohesion
+↓
+Things inside a module belong together.
+
+
+Low Coupling
+↓
+Different modules know as little as possible about each other.
+```
+
+### Final Mental Picture
+
+```
+              GOOD SOFTWARE
+
+        High Cohesion
+        --------------
+        Things inside a module
+        strongly belong together.
+
+               │
+               │
+               ▼
+
+        Low Coupling
+        -------------
+        Modules interact through
+        small, stable interfaces,
+        not internal details.
+```
+
+A useful way to remember the difference is:
+
+**Cohesion asks:** "Do these things belong together?" (inside a module)
+
+**Coupling asks:** "How dependent are these two modules on each other?" (between modules)
+
+A great design aims for high cohesion within modules and low coupling between modules. That's what makes systems easier to understand, test, maintain, and evolve.

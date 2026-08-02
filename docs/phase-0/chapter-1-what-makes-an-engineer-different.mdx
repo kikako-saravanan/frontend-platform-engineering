@@ -1,0 +1,406 @@
+# Chapter 1 — What Makes an Engineer Different?
+
+Before learning technology, learn how engineers think.
+
+## Why This Chapter Exists
+
+Most people begin frontend engineering by learning technologies like:
+
+- HTML
+- CSS
+- JavaScript
+- React
+- Next.js
+
+This approach teaches how to use technologies, but rarely explains why they exist.
+
+As a result, many developers memorize APIs without understanding the problems those APIs solve.
+
+This course takes the opposite approach.
+
+Instead of starting with tools, we begin by understanding engineering thinking.
+
+**Technology changes constantly. Engineering thinking does not.**
+
+## Learning Objectives
+
+After completing this chapter, you should be able to:
+
+- Understand what engineering really means.
+- Differentiate between a developer and an engineer.
+- Recognize problems before thinking about solutions.
+- Understand why constraints are important.
+- Explain the concept of trade-offs.
+- Apply an engineering mindset to software development.
+
+## The Problem
+
+Imagine a new frontend developer.
+
+They watch tutorials in this order:
+
+```
+HTML
+  ↓
+CSS
+  ↓
+JavaScript
+  ↓
+React
+  ↓
+Next.js
+  ↓
+Docker
+```
+
+Eventually they become capable of building applications.
+
+Now ask them:
+
+**Why was React created?**
+
+Many cannot answer.
+
+Ask:
+
+**Why does CSS have variables?**
+
+Again, many cannot answer.
+
+Ask:
+
+**Why does Module Federation exist?**
+
+Again, many cannot answer.
+
+They know how to use the technology.
+
+They do not understand why it exists.
+
+That is the difference between learning tools and learning engineering.
+
+## Story — The Wright Brothers
+
+Imagine it is the year 1903.
+
+Two brothers, Orville and Wilbur Wright, want to build a flying machine.
+
+Three people watch them.
+
+**Person 1**
+"This is impossible."
+
+**Person 2**
+"That engine looks interesting."
+
+**Person 3**
+An engineer asks:
+
+- Why can't humans already fly?
+- What force keeps birds in the air?
+- How much lift is needed?
+- How much weight can the wings support?
+- What happens if the wind changes?
+- How much power is required?
+
+The engineer does not begin by building.
+
+The engineer begins by asking questions.
+
+## What Is Engineering?
+
+Engineering is:
+
+**The process of solving real-world problems under constraints by making the best possible trade-offs.**
+
+Every word in this definition matters.
+
+### Solving Real Problems
+
+Engineering always starts with a problem.
+
+Examples:
+
+**Google**
+- Problem: People need to find information quickly.
+
+**Spotify**
+- Problem: People want to listen to music anywhere.
+
+**Uber**
+- Problem: People need transportation on demand.
+
+**Netflix**
+- Problem: People want instant access to movies and TV shows.
+
+**Lowe's**
+- Problem: Customers need an easy way to browse, compare, and purchase home improvement products across web and mobile platforms.
+
+Notice something.
+
+None of these problems mention React, JavaScript, or CSS.
+
+**Technology is never the problem. Technology is only part of the solution.**
+
+### Constraints
+
+Every engineering problem has constraints.
+
+Suppose someone asks you to build YouTube.
+
+At first, it seems easy.
+
+Now they add these constraints:
+
+- 1 Billion Users
+- Works on Mobile
+- Low Latency
+- Accessible
+- Secure
+- Global Availability
+- Minimal Cost
+- Reliable
+- Scalable
+- High Performance
+
+Suddenly, your solution changes.
+
+**Constraints determine architecture.**
+
+Without constraints, there is no engineering.
+
+### Trade-offs
+
+There is no perfect solution.
+
+Every engineering decision gives something and takes something.
+
+Examples:
+
+**Using React**
+
+**Pros:**
+- Component reuse
+- Better state management
+- Large ecosystem
+
+**Cons:**
+- Learning curve
+- Bundle size
+- Framework complexity
+
+**Using Module Federation**
+
+**Pros:**
+- Independent deployments
+- Team autonomy
+- Shared ownership
+
+**Cons:**
+- Runtime complexity
+- Version management
+- Shared dependency challenges
+
+**Using Design Tokens**
+
+**Pros:**
+- Consistency
+- Easy theming
+- Centralized updates
+
+**Cons:**
+- Initial setup
+- Additional abstraction
+- Learning overhead
+
+Every engineering decision introduces trade-offs.
+
+The goal is not to eliminate trade-offs.
+
+The goal is to choose the right trade-offs.
+
+## The Engineering Formula
+
+Every engineering solution follows the same lifecycle:
+
+```
+Problem
+  ↓
+Constraint
+  ↓
+Trade-offs
+  ↓
+Solution
+  ↓
+New Problems
+  ↓
+Better Solution
+```
+
+Examples:
+
+**Problem:** Web pages need structure.
+**↓**
+**Solution:** HTML
+**↓**
+**New Problem:** HTML looks plain.
+**↓**
+**Solution:** CSS
+**↓**
+**New Problem:** Pages need interactivity.
+**↓**
+**Solution:** JavaScript
+**↓**
+**New Problem:** Managing complex UI becomes difficult.
+**↓**
+**Solution:** React
+**↓**
+**New Problem:** Large organizations struggle to share frontend code.
+**↓**
+**Solution:** Module Federation
+
+Software evolves through this cycle.
+
+## Developer vs Engineer
+
+### Developer
+Typically asks:
+- Which framework should I use?
+- How do I build this feature?
+- Which library is popular?
+
+**Focus:** Implementation.
+
+### Engineer
+Asks:
+- What problem are we solving?
+- What constraints exist?
+- Why is this solution appropriate?
+- What alternatives exist?
+- What trade-offs are involved?
+
+**Focus:** Problem solving.
+
+## Junior vs Senior vs Staff Thinking
+
+**Junior Engineer**
+"What technology should I use?"
+
+**Mid-Level Engineer**
+"How do I implement this correctly?"
+
+**Senior Engineer**
+"What is the best technical solution?"
+
+**Staff Engineer**
+"Should we solve this problem differently altogether?"
+
+A staff engineer challenges assumptions before proposing solutions.
+
+## Key Principles
+
+### Principle 1
+Always start with the problem.
+
+Never start with the technology.
+
+### Principle 2
+Every technology exists because it solved a real problem.
+
+### Principle 3
+Every solution creates new problems.
+
+Software continuously evolves.
+
+### Principle 4
+Engineering is choosing the best trade-offs, not finding perfect solutions.
+
+### Principle 5
+Constraints shape architecture.
+
+Without understanding constraints, architecture decisions become guesses.
+
+## Mental Model
+
+Think of software as building a city.
+
+```
+Problems
+  ↓
+Roads
+  ↓
+Buildings
+  ↓
+Traffic
+  ↓
+More Problems
+  ↓
+Better Infrastructure
+```
+
+Cities continuously evolve.
+
+Software systems evolve exactly the same way.
+
+## Common Mistakes
+
+❌ Starting with technology.
+
+❌ Copying architecture without understanding the problem.
+
+❌ Assuming there is a perfect solution.
+
+❌ Ignoring constraints.
+
+❌ Believing newer technology is automatically better.
+
+## Real Engineering Questions
+
+Instead of asking:
+
+**Should we use React?**
+
+Ask:
+
+- What problem are we solving?
+- How complex is the UI?
+- How many engineers maintain this?
+- What are our performance requirements?
+- What are our long-term maintenance goals?
+
+## Chapter Summary
+
+This chapter teaches that engineering is fundamentally about solving problems, not using technologies.
+
+Every technology exists because it addressed a real-world need.
+
+An engineer begins by understanding the problem, identifying constraints, evaluating trade-offs, and only then selecting an appropriate solution.
+
+This mindset is the foundation upon which the rest of this course will build.
+
+## Key Takeaways
+
+- Engineering starts with problems, not tools.
+- Constraints define the solution space.
+- Every solution has trade-offs.
+- Technology is a means to solve problems, not an end in itself.
+- Understanding "why" is more valuable than memorizing "how."
+- Great engineers question assumptions before choosing solutions.
+
+## Assignments
+
+### Assignment 1
+
+Imagine you are building WhatsApp.
+
+List at least 10 engineering constraints before selecting any technologies.
+
+### Assignment 2
+
+Visit a website such as Google, GitHub, YouTube, Amazon, or Lowe's.
+
+Write down 20 "Why?" questions about its design, behavior, and architecture.
+
+Do not answer them yet.
+
+The goal is to practice observing software like an engineer.
