@@ -22,25 +22,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install dependencies
-        id: install
-        run: |
-          set +e
-          npm cache clean --force
-          for i in 1 2 3; do
-            npm install --no-audit --no-fund
-            status=$?
-            if [ $status -eq 0 ] && [ -x node_modules/.bin/docusaurus ]; then
-              exit 0
-            fi
-            echo "npm install failed (attempt $i, exit $status), retrying..."
-            rm -rf node_modules
-            sleep 10
-          done
-          exit 1
-      - name: Show npm debug log
-        if: failure() && steps.install.outcome == 'failure'
-        run: cat /home/runner/.npm/_logs/*-debug-0.log
+          cache: npm
+      - run: npm install
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
