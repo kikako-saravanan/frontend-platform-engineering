@@ -22,18 +22,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
       - name: Install dependencies
         id: install
         run: |
           set +e
+          npm cache clean --force
           for i in 1 2 3; do
             npm install --no-audit --no-fund
             status=$?
-            if [ $status -eq 0 ]; then
+            if [ $status -eq 0 ] && [ -x node_modules/.bin/docusaurus ]; then
               exit 0
             fi
             echo "npm install failed (attempt $i, exit $status), retrying..."
+            rm -rf node_modules
             sleep 10
           done
           exit 1
