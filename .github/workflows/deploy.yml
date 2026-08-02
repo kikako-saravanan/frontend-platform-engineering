@@ -22,7 +22,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+          cache: npm
+      - name: Install dependencies
+        run: |
+          npm install -g npm@10.8.2
+          for i in 1 2 3; do
+            npm install && break
+            echo "npm install failed (attempt $i), retrying..."
+            sleep 10
+          done
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
