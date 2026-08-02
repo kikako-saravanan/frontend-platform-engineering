@@ -39,7 +39,7 @@ jobs:
           done
           exit 1
       - name: Show npm debug log
-        if: steps.install.outcome == 'failure'
+        if: failure() && steps.install.outcome == 'failure'
         run: cat /home/runner/.npm/_logs/*-debug-0.log
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
