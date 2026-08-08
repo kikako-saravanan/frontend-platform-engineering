@@ -1,0 +1,1129 @@
+# Chapter 9 — Constraints & Optimization
+
+> **You cannot optimize everything. Engineering is deciding what matters most under the constraints you actually have.**
+
+---
+
+## 1. Start from reality
+
+Imagine I give you this assignment:
+
+> Build a website.
+
+You might ask:
+
+> What kind?
+
+I respond:
+
+> Doesn't matter. Just make the best website possible.
+
+There's a problem.
+
+What does **best** mean?
+
+Fastest?
+
+Most beautiful?
+
+Most accessible?
+
+Cheapest?
+
+Most secure?
+
+Smallest bundle?
+
+Fastest to develop?
+
+Most maintainable?
+
+Without constraints and goals, **"best" has no meaning.**
+
+That's our starting principle.
+
+---
+
+## 2. Let's build a frontend
+
+Suppose we're building a simple product page.
+
+Our first implementation:
+
+```
+Product Page
+
+Image
+Name
+Price
+Description
+Add to Cart
+```
+
+Now Product says:
+
+> It needs to load in under 2 seconds.
+
+We have our first constraint.
+
+Then Accessibility says:
+
+> It must meet WCAG requirements.
+
+Another constraint.
+
+Security says:
+
+> No unsafe third-party scripts.
+
+Another.
+
+Business says:
+
+> Ship it in three weeks.
+
+Another.
+
+Infrastructure says:
+
+> Keep CDN and compute costs reasonable.
+
+Another.
+
+Users say:
+
+> It needs to work reasonably well on slow mobile networks.
+
+Now the engineering problem is no longer:
+
+> Build a product page.
+
+It's closer to:
+
+```
+Build Product Page
+
+while satisfying:
+
+Performance
+Accessibility
+Security
+Schedule
+Cost
+Compatibility
+Maintainability
+```
+
+**That** is engineering.
+
+---
+
+## 3. What is a constraint?
+
+A constraint is:
+
+> **A boundary or limitation within which a solution must operate.**
+
+Think about designing an elevator.
+
+You cannot simply say:
+
+> Make the elevator infinitely fast.
+
+Constraints exist:
+
+```
+Building height
+Maximum weight
+Motor power
+Safety
+Cost
+Available space
+Human comfort
+```
+
+Those boundaries determine which solutions are possible.
+
+Software has boundaries too.
+
+---
+
+## 4. Frontend constraints
+
+Common frontend constraints include:
+
+### Performance
+
+```
+CPU
+Memory
+Network
+Bundle size
+Rendering time
+Device capability
+```
+
+### Business
+
+```
+Budget
+Deadline
+Team size
+Revenue requirements
+```
+
+### Technical
+
+```
+Browser support
+Existing architecture
+APIs
+Legacy systems
+Dependencies
+```
+
+### Human
+
+```
+Developer knowledge
+Maintenance capacity
+User abilities
+Cognitive load
+```
+
+### Product
+
+```
+Accessibility
+SEO
+Security
+Internationalization
+Reliability
+User experience
+```
+
+This is why two companies solving apparently identical problems may reasonably choose completely different architectures.
+
+Their constraints are different.
+
+---
+
+## 5. Hard vs soft constraints
+
+This distinction is useful.
+
+Suppose you're building a checkout.
+
+### Hard constraint
+
+> Payment information must be handled securely.
+
+Violating it may make the solution unacceptable.
+
+### Soft constraint
+
+> We'd like the checkout animation to feel smoother.
+
+Important perhaps, but negotiable.
+
+Think:
+
+```
+Constraints
+
+├── Hard
+│    └── Must satisfy
+│
+└── Soft
+     └── Prefer to satisfy
+```
+
+Recognizing the difference prevents engineers from spending enormous effort optimizing something optional while missing something mandatory.
+
+---
+
+## 6. Now we can understand optimization
+
+People often think optimization means:
+
+> Make software faster.
+
+That's only one kind of optimization.
+
+From first principles:
+
+> **Optimization means improving a system toward a specific objective while respecting its constraints.**
+
+The phrase **specific objective** is critical.
+
+---
+
+## 7. "Optimize this application" is incomplete
+
+Suppose your manager says:
+
+> Optimize the application.
+
+Your first question should be:
+
+> **Optimize for what?**
+
+Because we could optimize for:
+
+```
+Page speed
+Developer velocity
+Memory
+Bundle size
+Server cost
+Accessibility
+Conversion rate
+Reliability
+Maintainability
+```
+
+These goals can conflict.
+
+---
+
+## 8. Example: bundle size
+
+Suppose:
+
+```
+Bundle = 2 MB
+```
+
+You decide:
+
+> Smaller is better!
+
+You spend three months rewriting everything.
+
+Eventually:
+
+```
+Bundle = 1.4 MB
+```
+
+Fantastic?
+
+Maybe not.
+
+What if the application was already loading quickly enough for its users?
+
+And those three months could have delivered an important customer feature?
+
+You optimized a metric.
+
+But perhaps not the **system's actual objective**.
+
+This leads to an important lesson:
+
+> **Optimization without understanding the goal can make a system worse overall.**
+
+---
+
+## 9. Local vs global optimization
+
+This is extremely important at senior/staff level.
+
+Imagine a supermarket.
+
+The cashier says:
+
+> I'll optimize my work by serving customers as quickly as possible.
+
+So the cashier throws products into bags randomly.
+
+Cashier speed improves.
+
+But:
+
+- Products get damaged.
+- Customers complain.
+- Returns increase.
+- Support workload increases.
+
+One part improved.
+
+The overall system got worse.
+
+That's **local optimization**.
+
+---
+
+### Frontend example
+
+An engineer says:
+
+> Let's optimize JavaScript bundle size.
+
+They remove a shared component library.
+
+Bundle:
+
+```
+500 KB
+↓
+420 KB
+```
+
+Great.
+
+But now 20 teams implement their own:
+
+```
+Button
+Modal
+Input
+Accessibility logic
+```
+
+You've optimized bundle size locally while damaging maintainability and consistency globally.
+
+Staff engineers must ask:
+
+> **Am I optimizing the component, or the whole system?**
+
+---
+
+## 10. Constraints create trade-offs
+
+Remember Chapter 5?
+
+Now we can connect it.
+
+Suppose we want:
+
+```
+Maximum Performance
+Maximum Flexibility
+Minimum Complexity
+Minimum Cost
+Fastest Delivery
+```
+
+Usually we cannot maximize everything.
+
+Constraints force us to prioritize.
+
+So:
+
+```
+Constraints
+     ↓
+Competing Goals
+     ↓
+Trade-offs
+     ↓
+Priorities
+     ↓
+Optimization
+     ↓
+Decision
+```
+
+This is a much more complete engineering model.
+
+---
+
+## 11. Optimization has diminishing returns
+
+Imagine page load time:
+
+```
+5 sec → 3 sec
+```
+
+Huge improvement.
+
+Then:
+
+```
+3 sec → 2 sec
+```
+
+Still valuable.
+
+Then:
+
+```
+2 sec → 1.8 sec
+```
+
+Maybe useful.
+
+Then:
+
+```
+1.8 sec → 1.79 sec
+```
+
+Would you spend three months achieving that?
+
+Probably not.
+
+Improvement usually becomes increasingly expensive.
+
+Conceptually:
+
+```
+Initial Optimization
+
+Small Effort
+    ↓
+Large Improvement
+
+
+Later Optimization
+
+Large Effort
+    ↓
+Small Improvement
+```
+
+This is **diminishing returns**.
+
+A good engineer knows when to stop.
+
+---
+
+## 12. The bottleneck principle
+
+Imagine a highway.
+
+Three sections:
+
+```
+Section A → 100 cars/min
+Section B → 20 cars/min
+Section C → 100 cars/min
+```
+
+How many cars can the overall road roughly move through the entire route?
+
+The bottleneck is B.
+
+Making A twice as wide doesn't solve the main throughput problem.
+
+Software behaves similarly.
+
+Suppose page loading looks like:
+
+```
+Network      100 ms
+JavaScript   150 ms
+API          4,000 ms
+Rendering    100 ms
+```
+
+Should we spend weeks making JavaScript:
+
+```
+150 ms → 120 ms
+```
+
+while the API takes four seconds?
+
+Probably not.
+
+First optimize the bottleneck.
+
+---
+
+## 13. Measure before optimizing
+
+This gives us another rule:
+
+> **Never optimize based only on intuition when the system can be measured.**
+
+Suppose someone says:
+
+> React is making our application slow.
+
+How do they know?
+
+Measure.
+
+```
+Browser DevTools
+React Profiler
+Network traces
+Performance traces
+Memory profiles
+Web Vitals
+Production telemetry
+```
+
+Evidence first.
+
+Optimization second.
+
+Notice how Chapter 7 returns:
+
+```
+Symptom
+↓
+Measurement
+↓
+Evidence
+↓
+Bottleneck
+↓
+Optimization
+```
+
+Root Cause Analysis and optimization are closely connected.
+
+---
+
+## 14. Premature optimization
+
+Imagine writing:
+
+```javascript
+const users = getUsers();
+```
+
+And immediately worrying:
+
+> Should we use WebAssembly?
+
+> Should we add workers?
+
+> Should we cache this?
+
+> Should we use a custom data structure?
+
+You don't even know whether there's a performance problem.
+
+You've added complexity before evidence justified it.
+
+That's premature optimization.
+
+A better process:
+
+```
+Build Correctly
+     ↓
+Measure
+     ↓
+Find Bottleneck
+     ↓
+Optimize
+     ↓
+Measure Again
+```
+
+Notice:
+
+**correctness comes first.**
+
+---
+
+## 15. Optimization can create complexity
+
+Suppose simple code is:
+
+```javascript
+const total = items.reduce(
+  (sum, item) => sum + item.price,
+  0
+);
+```
+
+Imagine replacing it with a highly specialized optimization that's 200 lines long.
+
+Perhaps you gain:
+
+```
+2 ms
+```
+
+But now:
+
+- Nobody understands it.
+- Bugs become harder to diagnose.
+- Tests become complicated.
+- Maintenance costs increase.
+
+You traded:
+
+```
+Maintainability
+        ↓
+for
+        ↓
+Performance
+```
+
+Maybe that's correct.
+
+Maybe not.
+
+Again:
+
+**trade-offs.**
+
+---
+
+## 16. Optimization is contextual
+
+Consider two applications.
+
+### Marketing website
+
+Priorities might be:
+
+```
+SEO
+Fast initial load
+Accessibility
+Low JavaScript
+```
+
+### Complex analytics dashboard
+
+Priorities might be:
+
+```
+Interaction speed
+State management
+Data visualization
+Caching
+Developer productivity
+```
+
+Same web platform.
+
+Different constraints.
+
+Different architecture.
+
+That's why experienced engineers dislike statements like:
+
+> "Framework X is always better."
+
+The missing question is:
+
+> **Better under what constraints?**
+
+---
+
+## 17. Staff engineer perspective
+
+Imagine your organization has 500 frontend engineers.
+
+You discover a new build tool.
+
+It makes builds:
+
+```
+20% faster
+```
+
+Should you migrate?
+
+Junior thinking:
+
+> Faster = better. Let's migrate.
+
+Staff thinking:
+
+```
+How much engineering time does migration require?
+
+How many repositories are affected?
+
+What training is required?
+
+What plugins are incompatible?
+
+What's the rollback strategy?
+
+How much developer time does 20% actually save?
+
+How long before the migration pays for itself?
+
+What operational risk does it introduce?
+```
+
+Now you're optimizing the **organization**, not merely the build command.
+
+That's a major staff-level shift.
+
+---
+
+## 18. Constraint hierarchy
+
+When making a decision, it helps to establish priorities.
+
+Example:
+
+```
+Must Have
+
+Security
+Correctness
+Accessibility
+
+↓
+
+Important
+
+Performance
+Maintainability
+
+↓
+
+Desired
+
+Developer convenience
+
+↓
+
+Nice to Have
+
+Fancy animation
+```
+
+This is illustrative, not universal—the hierarchy changes with the product.
+
+The important idea is:
+
+> **Make priorities explicit.**
+
+Otherwise teams argue endlessly because different people are secretly optimizing for different things.
+
+---
+
+## 19. The optimization framework
+
+When someone asks you to improve a system, use this:
+
+```
+1. What is the goal?
+
+        ↓
+
+2. What constraints exist?
+
+        ↓
+
+3. How do we measure success?
+
+        ↓
+
+4. What is the current baseline?
+
+        ↓
+
+5. Where is the bottleneck?
+
+        ↓
+
+6. What options exist?
+
+        ↓
+
+7. What trade-offs does each option introduce?
+
+        ↓
+
+8. Choose the highest-value change
+
+        ↓
+
+9. Implement
+
+        ↓
+
+10. Measure again
+```
+
+Don't memorize the exact numbering.
+
+Understand the reasoning.
+
+---
+
+## 20. Connect everything we've learned
+
+Let's say:
+
+> Our checkout is slow.
+
+### Engineering mindset
+
+What's the actual problem?
+
+### First principles
+
+What fundamentally determines checkout latency?
+
+### Systems thinking
+
+Which systems participate?
+
+```
+Frontend
+API
+Payments
+Inventory
+Pricing
+Network
+```
+
+### Abstraction
+
+Which implementation details can we ignore initially?
+
+### Trade-offs
+
+What might improving latency cost?
+
+### Complexity
+
+Are unnecessary dependencies making the flow harder?
+
+### Root Cause Analysis
+
+Where is the delay actually coming from?
+
+### Modeling
+
+What representation helps us reason about the checkout flow?
+
+### Constraints & Optimization
+
+Which bottleneck should we improve, under what limits?
+
+See what is happening?
+
+**Phase 0 is becoming one unified reasoning system.**
+
+---
+
+## Mental Model
+
+Imagine you're packing luggage for a flight.
+
+Constraint:
+
+```
+Maximum 20 kg
+```
+
+You want:
+
+```
+Laptop
+Clothes
+Shoes
+Books
+Camera
+Everything else
+```
+
+You cannot maximize everything.
+
+So you:
+
+1. Understand the constraint.
+2. Determine priorities.
+3. Make trade-offs.
+4. Remove low-value items.
+5. Optimize what fits.
+
+Software engineering works exactly the same way.
+
+---
+
+## Common Mistakes
+
+- Optimizing without measurement.
+- Optimizing the wrong metric.
+- Ignoring constraints.
+- Optimizing one component while hurting the overall system.
+- Continuing optimization after returns become negligible.
+- Sacrificing maintainability for meaningless performance improvements.
+- Treating "faster" as automatically "better."
+
+---
+
+## Chapter Summary
+
+Constraints define the space within which engineering solutions can exist.
+
+Optimization is not simply making software faster. It is improving a system toward a specific goal while respecting its constraints.
+
+Strong engineers measure before optimizing, identify the real bottleneck, understand diminishing returns, and optimize the **whole system** rather than isolated parts.
+
+---
+
+## Revision Notes
+
+### Constraint
+
+> A boundary or limitation within which a solution must operate.
+
+Examples:
+
+```
+Time
+Money
+CPU
+Memory
+Bandwidth
+Security
+Compatibility
+Team size
+```
+
+### Optimization
+
+> Improving a system toward a defined objective while respecting its constraints.
+
+### Core Flow
+
+```
+Goal
+ ↓
+Constraints
+ ↓
+Measurement
+ ↓
+Bottleneck
+ ↓
+Options
+ ↓
+Trade-offs
+ ↓
+Optimization
+ ↓
+Measure Again
+```
+
+### Three rules
+
+**Rule 1**
+
+> Don't optimize what you haven't measured.
+
+**Rule 2**
+
+> Optimize the bottleneck, not whatever is easiest to optimize.
+
+**Rule 3**
+
+> Optimize the system, not just one component.
+
+### Golden Question
+
+Whenever someone says:
+
+> "We need to optimize this."
+
+Ask:
+
+> **"Optimize for what?"**
+
+That one question can prevent months of wasted engineering work.
+
+---
+
+## Interview Perspective
+
+### Junior
+
+**What is premature optimization?**
+
+Optimizing something before evidence shows that it is a meaningful bottleneck.
+
+### Mid-level
+
+**Your React page is slow. What would you do?**
+
+A strong answer starts with measurement—not immediately adding `useMemo`.
+
+### Senior
+
+**When would you sacrifice maintainability for performance?**
+
+When measured performance requirements justify the additional complexity and the trade-off is understood and contained.
+
+### Staff
+
+**Your organization wants to migrate 300 applications to a faster build tool. How would you evaluate the decision?**
+
+Don't answer merely with technical benchmarks.
+
+Think about:
+
+```
+Migration cost
+Developer productivity
+Compatibility
+Risk
+Training
+Maintenance
+Payback period
+Rollback
+Long-term strategy
+```
+
+That's organizational optimization.
+
+---
+
+## Your Assignment
+
+Take this statement:
+
+> **"Our React application is slow."**
+
+Do **not** solve it.
+
+Instead, write the questions you would ask before touching the code.
+
+Try for at least 10.
+
+Think about:
+
+- What does "slow" mean?
+- Who experiences it?
+- Where?
+- When?
+- How are we measuring it?
+- What systems participate?
+
+This is intentionally an investigation exercise, not a React exercise.
+
+---
+
+## Where We Are Now
+
+```
+Phase 0 — Engineering Thinking
+
+01 Engineering Mindset          ✓
+02 First Principles             ✓
+03 Systems Thinking             ✓
+04 Abstraction                  ✓
+05 Trade-offs                   ✓
+06 Complexity                   ✓
+07 Root Cause Analysis          ✓
+08 Modeling                     ✓
+09 Constraints & Optimization   ✓
+
+10 Engineering Decision Making  ← NEXT
+11 Communication & Documentation
+12 Thinking Like a Staff Engineer
+```
+
+Chapter 10 is where we're going to take everything you've learned and answer a difficult question:
+
+> **If multiple solutions are valid, information is incomplete, every option has trade-offs, and nobody knows the future—how does an experienced engineer actually make a decision?**
+
+That's **Engineering Decision Making**, and it's where these Phase 0 concepts start turning into architecture skills.

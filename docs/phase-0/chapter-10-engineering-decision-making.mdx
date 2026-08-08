@@ -1,0 +1,1281 @@
+# Chapter 10 — Engineering Decision Making
+
+> **Good engineering decisions are not about proving that your option is perfect. They are about choosing a reasonable option for the current evidence, constraints, and trade-offs.**
+
+---
+
+## 1. The problem
+
+Imagine your team has a large React application.
+
+Build time has grown to 15 minutes.
+
+Someone proposes:
+
+> "Let's migrate from Webpack to Vite."
+
+Engineer A says:
+
+> Vite is faster. Let's migrate.
+
+Engineer B says:
+
+> Webpack already works. Don't touch it.
+
+Engineer C says:
+
+> Turbopack is the future.
+
+Engineer D says:
+
+> Let's migrate to Next.js while we're at it.
+
+Who is correct?
+
+Possibly none of them.
+
+Because they started with **solutions**.
+
+We need to go backward.
+
+---
+
+## 2. Start with the decision, not the technology
+
+The actual problem might be:
+
+> Developers are losing too much productive time waiting for builds.
+
+Now we can investigate.
+
+Maybe:
+
+```
+15-minute build
+      ↓
+Why?
+      ↓
+Webpack?
+CI infrastructure?
+Type checking?
+Tests?
+Dependency graph?
+Poor caching?
+```
+
+What if Webpack itself only accounts for 90 seconds?
+
+Migrating to Vite might not solve the real problem at all.
+
+Chapter 7 returns:
+
+> **Root Cause Analysis before solution selection.**
+
+---
+
+## 3. First principle of decision making
+
+Why is engineering decision-making difficult?
+
+Because we almost never have complete information.
+
+Imagine you need to decide today whether to adopt Technology X.
+
+You don't know:
+
+- what requirements you'll have in two years
+- whether the library will remain maintained
+- whether your organization will restructure
+- whether browsers will introduce something better
+- whether the product will grow 10x
+- whether the migration will uncover hidden problems
+
+Yet you still need to make a decision.
+
+This gives us a fundamental truth:
+
+> **Engineering decisions are made under uncertainty.**
+
+If we waited until we knew everything, we'd never build anything.
+
+---
+
+## 4. A decision is not a prediction
+
+This distinction matters.
+
+Suppose you choose Architecture A.
+
+Two years later, requirements change and Architecture B becomes better.
+
+Does that mean your original decision was wrong?
+
+Not necessarily.
+
+The correct question is:
+
+> Given what we knew **at the time**, was A a reasonable choice?
+
+Good engineering does not mean predicting the future perfectly.
+
+It means making defensible decisions with the information currently available.
+
+---
+
+## 5. The decision framework
+
+When facing an important technical decision, think:
+
+```
+Problem
+   ↓
+Goals
+   ↓
+Constraints
+   ↓
+Evidence
+   ↓
+Options
+   ↓
+Trade-offs
+   ↓
+Risks
+   ↓
+Reversibility
+   ↓
+Decision
+   ↓
+Measure
+   ↓
+Revisit if assumptions change
+```
+
+Let's understand each one.
+
+---
+
+## 6. Step 1 — Define the problem
+
+Bad:
+
+> Should we use Redux or Zustand?
+
+Good:
+
+> We have state shared across 30 components, and our current state architecture is becoming difficult to reason about.
+
+See the difference?
+
+The first question starts with technologies.
+
+The second starts with the problem.
+
+Another example:
+
+Bad:
+
+> Should we use microfrontends?
+
+Good:
+
+> Eight teams working in the same frontend cannot release independently without coordinating deployments.
+
+Now we can reason.
+
+---
+
+## 7. Step 2 — Define the goal
+
+A problem tells us what's wrong.
+
+A goal tells us what success looks like.
+
+Problem:
+
+> CI takes 25 minutes.
+
+Goal:
+
+> Reduce median PR feedback time below 10 minutes without reducing test coverage.
+
+Much better.
+
+Now we can measure whether our solution worked.
+
+Without a success criterion, teams often declare projects successful simply because the migration finished.
+
+That's not enough.
+
+---
+
+## 8. Step 3 — Identify constraints
+
+Suppose we're selecting a frontend framework.
+
+Constraints might include:
+
+```
+Must support existing browsers
+Must work with current authentication
+Team knows React
+Six-month deadline
+Must support accessibility
+Cannot rewrite backend
+SEO required
+```
+
+Constraints eliminate options.
+
+This connects directly to Chapter 9.
+
+---
+
+## 9. Step 4 — Gather evidence
+
+Now investigate reality.
+
+For our slow-build example:
+
+```
+Measure build stages
+Measure dependency graph
+Measure cache hit rate
+Profile TypeScript
+Profile tests
+Profile bundling
+Compare local vs CI
+```
+
+Don't make architecture decisions from feelings when relevant evidence is available.
+
+Instead of:
+
+> "Webpack feels slow."
+
+We want:
+
+> "Bundling accounts for 62% of our median CI build time."
+
+Now we have evidence.
+
+---
+
+## 10. Step 5 — Generate multiple options
+
+A common mistake is comparing:
+
+```
+My Solution
+vs.
+Do Nothing
+```
+
+That's weak decision-making.
+
+Generate alternatives.
+
+For example:
+
+### Problem
+
+Builds are too slow.
+
+### Options
+
+```
+A — Improve Webpack configuration
+
+B — Add better caching
+
+C — Upgrade CI hardware
+
+D — Migrate to Vite
+
+E — Split the application
+
+F — Change test strategy
+
+G — Combination of several options
+```
+
+Now we're actually engineering.
+
+---
+
+## 11. Step 6 — Compare trade-offs
+
+Suppose our simplified comparison is:
+
+| Option               | Speed gain | Migration cost |   Risk | Long-term benefit |
+| -------------------- | ---------: | -------------: | -----: | ----------------: |
+| Improve caching      |     Medium |            Low |    Low |            Medium |
+| Upgrade hardware     |     Medium |            Low |    Low |               Low |
+| Vite migration       |       High |           High | Medium |              High |
+| Rewrite architecture |  Very high |      Very high |   High |  Potentially high |
+
+Notice:
+
+There is no obvious "best."
+
+The answer depends on constraints.
+
+If you need improvement **this month**, caching might win.
+
+If the platform will be maintained for another decade, migration may deserve more consideration.
+
+Context determines the answer.
+
+---
+
+## 12. Step 7 — Evaluate risk
+
+An option can look excellent on paper but contain substantial uncertainty.
+
+Ask:
+
+- What can fail?
+- How likely is it?
+- How bad would the impact be?
+- Can we detect failure?
+- Can we recover?
+
+A useful mental model is:
+
+```
+Risk ≈ Probability × Impact
+```
+
+This isn't always something you need to calculate numerically. It's a way to reason.
+
+For example:
+
+### Risk A
+
+Minor visual bug.
+
+Probability: High
+Impact: Low
+
+### Risk B
+
+Checkout stops processing payments.
+
+Probability: Low
+Impact: Catastrophic
+
+Risk B may deserve much stronger safeguards even though it is less likely.
+
+---
+
+## 13. Reversible vs irreversible decisions
+
+This is one of the most useful ideas in engineering leadership.
+
+Not all decisions deserve the same amount of analysis.
+
+### Reversible decision
+
+Example:
+
+> Change a linting rule.
+
+If it doesn't work:
+
+Undo it.
+
+Don't spend three months debating.
+
+### Expensive-to-reverse decision
+
+Example:
+
+> Move hundreds of applications onto a new platform architecture.
+
+Changing your mind later could cost millions.
+
+Spend much more time investigating.
+
+Mental model:
+
+```
+Easy to reverse
+     ↓
+Decide quickly
+Experiment
+Learn
+
+
+Hard to reverse
+     ↓
+Investigate deeply
+Prototype
+Gather evidence
+Plan migration
+```
+
+The harder a decision is to reverse, the more evidence you generally want before committing.
+
+---
+
+## 14. One-way and two-way doors
+
+A useful metaphor is doors.
+
+### Two-way door
+
+You walk through.
+
+Don't like what's there?
+
+Walk back.
+
+Examples:
+
+```
+Component naming
+Small library
+Feature flag
+Minor UI pattern
+```
+
+Make these decisions relatively quickly.
+
+### One-way—or very expensive—door
+
+You walk through and returning is difficult.
+
+Examples:
+
+```
+Organization-wide platform
+Database architecture
+Public API contract
+Major framework migration
+Design-system API used by hundreds of apps
+```
+
+Slow down.
+
+Gather evidence.
+
+---
+
+## 15. Prototypes reduce uncertainty
+
+Suppose we're debating whether Vite can support our architecture.
+
+We can argue for three weeks.
+
+Or build:
+
+```
+Small Proof of Concept
+       ↓
+Test critical assumptions
+       ↓
+Gather evidence
+       ↓
+Make decision
+```
+
+A prototype is not necessarily intended to become production code.
+
+Its purpose may simply be:
+
+> **Reduce uncertainty cheaply.**
+
+That's an important distinction.
+
+---
+
+## 16. Decision quality vs outcome quality
+
+This is subtle.
+
+Imagine:
+
+You carefully evaluate an investment.
+
+Everything suggests it is reasonable.
+
+Then an unpredictable event causes it to fail.
+
+Bad outcome.
+
+Was the decision necessarily bad?
+
+No.
+
+Now reverse it.
+
+Someone makes a reckless decision without evidence.
+
+By luck, it succeeds.
+
+Good outcome.
+
+Was the decision good?
+
+Still no.
+
+So distinguish:
+
+```
+Decision Quality ≠ Outcome Quality
+```
+
+Evaluate decisions based on the reasoning and evidence available at the time, not only hindsight.
+
+This prevents organizations from learning the wrong lessons.
+
+---
+
+## 17. Beware of sunk cost
+
+Imagine your team has spent:
+
+```
+8 months
+```
+
+building Framework X.
+
+Evidence now shows it isn't solving the problem.
+
+Someone says:
+
+> "We can't stop. We've already spent eight months."
+
+That's dangerous reasoning.
+
+Those eight months are gone regardless.
+
+The better question is:
+
+> Starting **today**, what choice gives us the best future outcome?
+
+Past investment should inform what assets or migration costs remain, but shouldn't by itself justify continuing a bad direction.
+
+---
+
+## 18. Beware of technology enthusiasm
+
+Engineers love technology.
+
+That's useful—and dangerous.
+
+Imagine:
+
+> "Rust is amazing. Let's rewrite our frontend tooling in Rust."
+
+Maybe that's a good idea.
+
+But the decision should not be:
+
+```
+Technology is exciting
+        ↓
+Adopt technology
+```
+
+It should be:
+
+```
+Problem
+↓
+Constraints
+↓
+Requirements
+↓
+Options
+↓
+Evidence
+↓
+Trade-offs
+↓
+Decision
+```
+
+Tools serve problems.
+
+Problems don't exist to justify tools.
+
+---
+
+## 19. Beware of resume-driven development
+
+A dangerous pattern is choosing technologies because engineers want them on their résumé.
+
+Example:
+
+```
+Simple internal dashboard
+
+↓
+
+Kubernetes
+
+↓
+
+Microservices
+
+↓
+
+Kafka
+
+↓
+
+GraphQL
+
+↓
+
+Microfrontends
+```
+
+Could these technologies work?
+
+Sure.
+
+Were they necessary?
+
+Maybe not.
+
+Remember Chapter 6:
+
+> Every unnecessary technology adds relationships and therefore complexity.
+
+Use the simplest architecture that satisfies the actual constraints while leaving appropriate room for likely evolution.
+
+---
+
+## 20. Decision matrices
+
+For sufficiently important decisions, we can make reasoning explicit.
+
+Suppose we're choosing a frontend build tool.
+
+Criteria:
+
+```
+Development speed
+Production build
+Plugin ecosystem
+Migration effort
+Team familiarity
+Long-term maintenance
+```
+
+We could compare options:
+
+| Criterion              | Webpack | Vite | Alternative |
+| ---------------------- | ------: | ---: | ----------: |
+| Dev experience         |       2 |    5 |           4 |
+| Existing compatibility |       5 |    3 |           2 |
+| Migration effort       |       5 |    3 |           2 |
+| Ecosystem fit          |       5 |    4 |           3 |
+| Team knowledge         |       5 |    3 |           2 |
+
+Don't blindly add numbers and declare a winner.
+
+The matrix exists to **make assumptions visible**.
+
+Someone can challenge:
+
+> Why is compatibility more important than developer speed?
+
+Excellent.
+
+Now we're discussing priorities instead of opinions.
+
+---
+
+## 21. Separate facts, assumptions, and preferences
+
+This is a powerful habit.
+
+During an architecture discussion, write:
+
+### Facts
+
+```
+Current CI median = 22 minutes
+120 applications use current tooling
+20 custom plugins exist
+```
+
+### Assumptions
+
+```
+Application count will increase
+Vite migration will improve local startup
+Teams can migrate incrementally
+```
+
+### Preferences
+
+```
+Team prefers Vite
+Developers dislike Webpack configuration
+```
+
+These are not equally strong evidence.
+
+A common engineering failure is presenting an assumption as though it were a fact.
+
+---
+
+## 22. Make assumptions explicit
+
+Suppose we decide:
+
+> We'll use client-side rendering because SEO isn't required.
+
+Write that assumption down.
+
+Six months later:
+
+Marketing says:
+
+> We need Google indexing.
+
+Now we know exactly which assumption changed.
+
+Architecture decisions become much easier to revisit when their assumptions are documented.
+
+---
+
+## 23. Decisions have a time horizon
+
+Architecture doesn't need to solve every hypothetical future problem.
+
+Imagine your startup has:
+
+```
+100 users
+3 engineers
+```
+
+Designing immediately for:
+
+```
+1 billion users
+10,000 engineers
+```
+
+may create enormous accidental complexity.
+
+But ignoring obvious growth entirely is also dangerous.
+
+The question is:
+
+> **What future should we reasonably design for?**
+
+This is judgment.
+
+There is no formula that removes it.
+
+---
+
+## 24. Staff engineers optimize for optionality
+
+Here's a more advanced concept.
+
+Suppose you're uncertain about the future.
+
+Instead of predicting perfectly, sometimes you design the system so multiple futures remain possible.
+
+For example:
+
+```
+Application
+     ↓
+Stable interface
+     ↓
+Implementation
+```
+
+If the implementation can later be replaced without changing every consumer, you've preserved **optionality**.
+
+Abstraction returns.
+
+Good abstractions can reduce the cost of future change.
+
+But remember Chapter 6:
+
+Too much abstraction "just in case" creates complexity.
+
+Again:
+
+trade-off.
+
+---
+
+## 25. When should we delay a decision?
+
+Sometimes the best decision is:
+
+> **Not yet.**
+
+If waiting gives you valuable information and doesn't create major cost, delay can be rational.
+
+Example:
+
+You don't yet know whether your application needs global state management.
+
+Don't install Redux merely because it might.
+
+Start simpler.
+
+When the requirement becomes clear, decide with better evidence.
+
+This is sometimes called delaying commitment until the **last responsible moment**—not the last possible moment.
+
+The difference matters.
+
+---
+
+## 26. When should we decide quickly?
+
+When:
+
+- The decision is reversible.
+- Cost of delay is high.
+- Additional research won't materially change the answer.
+- The stakes are low.
+
+Staff engineers aren't slow decision-makers.
+
+They know **which decisions deserve slowness**.
+
+---
+
+## 27. Architecture Decision Records
+
+Now we're finally ready for something we'll use throughout this course.
+
+An **ADR** records an important architecture decision.
+
+Basic structure:
+
+```
+ADR-001
+
+Title:
+Use Vite as Application Build Tool
+
+Status:
+Accepted
+
+Context:
+What problem exists?
+
+Constraints:
+What limitations matter?
+
+Options:
+What alternatives did we consider?
+
+Decision:
+What did we choose?
+
+Rationale:
+Why?
+
+Consequences:
+What do we gain?
+What do we sacrifice?
+
+Assumptions:
+What must remain true?
+
+Revisit when:
+What would cause us to reconsider?
+```
+
+Notice how almost all of Phase 0 appears inside an ADR.
+
+That's not an accident.
+
+---
+
+## 28. Example ADR
+
+### Context
+
+Local development startup takes 90 seconds and significantly slows feedback.
+
+### Goal
+
+Reduce startup below 10 seconds.
+
+### Options
+
+```
+Optimize Webpack
+Vite
+Alternative bundler
+Do nothing
+```
+
+### Decision
+
+Suppose we choose Vite.
+
+### Why
+
+```
+Measured startup improvement
+Acceptable compatibility
+Incremental migration possible
+Strong ecosystem fit
+```
+
+### Consequences
+
+Benefits:
+
+```
+Faster feedback
+Simpler dev configuration
+```
+
+Costs:
+
+```
+Migration effort
+Plugin rewrites
+Training
+New operational knowledge
+```
+
+### Revisit when
+
+```
+Critical compatibility requirement appears
+Maintenance becomes uncertain
+Platform constraints change
+```
+
+That's engineering documentation.
+
+Not:
+
+> "We chose Vite because it's fast."
+
+---
+
+## 29. How everything connects
+
+Imagine we're deciding whether to introduce microfrontends.
+
+### Chapter 1 — Engineering
+
+What's the problem?
+
+### Chapter 2 — First Principles
+
+Why does independent frontend ownership matter?
+
+### Chapter 3 — Systems
+
+Where should system boundaries exist?
+
+### Chapter 4 — Abstraction
+
+What should each application expose?
+
+### Chapter 5 — Trade-offs
+
+What complexity do microfrontends introduce?
+
+### Chapter 6 — Complexity
+
+Will this reduce organizational complexity while increasing technical complexity?
+
+### Chapter 7 — RCA
+
+Are deployment problems actually caused by the monolith?
+
+### Chapter 8 — Modeling
+
+How should we model domains and ownership?
+
+### Chapter 9 — Constraints
+
+How many teams? What deployment requirements?
+
+### Chapter 10 — Decision Making
+
+Given all of that:
+
+> **Should we actually adopt microfrontends?**
+
+Now you can see why we didn't start this course with React.
+
+We're building the machinery needed to reason about React.
+
+---
+
+## Mental Model
+
+Imagine you're crossing a river.
+
+There are several paths:
+
+```
+Bridge
+
+Boat
+
+Swim
+
+Go around
+```
+
+There is no universally correct option.
+
+You need to know:
+
+```
+How deep is the river?
+How much time do you have?
+Can you swim?
+How much money do you have?
+Are you carrying equipment?
+Is there a bridge nearby?
+```
+
+The correct decision emerges from **context**.
+
+Software architecture works the same way.
+
+---
+
+## Common Mistakes
+
+- Starting with a preferred technology.
+- Considering only one option.
+- Treating assumptions as facts.
+- Ignoring migration cost.
+- Ignoring reversibility.
+- Overanalyzing trivial decisions.
+- Underanalyzing expensive decisions.
+- Letting sunk cost control future choices.
+- Measuring decision quality only by eventual outcome.
+- Designing for imaginary scale without evidence.
+
+---
+
+## Chapter Summary
+
+Engineering decision-making is the process of selecting a reasonable course of action despite incomplete information.
+
+Strong engineers:
+
+- define the problem first
+- establish measurable goals
+- identify constraints
+- gather evidence
+- generate alternatives
+- compare trade-offs
+- evaluate risk
+- consider reversibility
+- document assumptions
+- measure outcomes
+- revisit decisions when circumstances change
+
+The goal isn't certainty.
+
+> **The goal is a defensible decision.**
+
+---
+
+## Revision Notes
+
+### Core idea
+
+> Good engineering decisions are contextual, evidence-based, explicit about uncertainty, and appropriate to their reversibility.
+
+### Decision framework
+
+```
+Problem
+   ↓
+Goal
+   ↓
+Constraints
+   ↓
+Evidence
+   ↓
+Options
+   ↓
+Trade-offs
+   ↓
+Risk
+   ↓
+Reversibility
+   ↓
+Decision
+   ↓
+Measure
+   ↓
+Revisit
+```
+
+### Facts vs assumptions
+
+```
+FACT
+What we know.
+
+ASSUMPTION
+What we believe is likely.
+
+PREFERENCE
+What we personally favor.
+```
+
+Don't confuse them.
+
+### Reversibility
+
+```
+Easy to reverse
+→ Decide faster.
+
+Expensive to reverse
+→ Investigate deeper.
+```
+
+### Golden Rule
+
+> **Don't ask, "Which technology is best?" Ask, "Which option best fits our problem, constraints, evidence, and acceptable trade-offs?"**
+
+---
+
+## Interview Perspective
+
+### Junior
+
+**How would you choose between two libraries?**
+
+Don't answer only with popularity.
+
+Discuss requirements, maintenance, ecosystem, complexity, and fit.
+
+### Mid-level
+
+**Redux or Context—which should we use?**
+
+Correct mindset:
+
+> What state problem are we trying to solve?
+
+Then reason from requirements.
+
+### Senior
+
+**Should we migrate from Webpack to Vite?**
+
+Discuss:
+
+- measured problem
+- migration cost
+- compatibility
+- developer productivity
+- alternatives
+- incremental migration
+- success metrics
+
+### Staff
+
+**Twenty teams disagree on the frontend platform direction. How do you make the decision?**
+
+A strong answer includes:
+
+```
+Shared problem definition
+Explicit constraints
+Data
+Stakeholder requirements
+Alternatives
+Prototype
+Decision criteria
+Risks
+Migration strategy
+Documentation
+Success metrics
+Revisit conditions
+```
+
+The staff engineer's job isn't simply to win the argument.
+
+It's to create a process through which the organization can reach and execute a good decision.
+
+---
+
+## Assignment — Your First Architecture Decision
+
+Imagine this situation:
+
+> Your company has a React application maintained by eight teams. Releases require coordination between all teams and are becoming increasingly painful. Someone proposes migrating to microfrontends with Module Federation.
+
+Do **not** tell me whether you would adopt Module Federation.
+
+Instead create:
+
+```
+Problem
+
+Goal
+
+Constraints
+
+Evidence Needed
+
+Assumptions
+
+Options
+
+Trade-offs
+
+Risks
+
+Reversibility
+
+Questions Still Unknown
+```
+
+Then—and only then—make a recommendation.
+
+This is your first real architecture exercise.
+
+---
+
+## Where We Are
+
+```
+Phase 0 — Engineering Thinking
+
+01 Engineering Mindset            ✓
+02 First Principles               ✓
+03 Systems Thinking               ✓
+04 Abstraction                    ✓
+05 Trade-offs                     ✓
+06 Complexity                     ✓
+07 Root Cause Analysis            ✓
+08 Modeling                       ✓
+09 Constraints & Optimization     ✓
+10 Engineering Decision Making    ✓
+
+11 Communication & Documentation  ← NEXT
+12 Thinking Like a Staff Engineer
+```
+
+And Chapter 11 is important for a reason that surprises many technically strong engineers:
+
+> **An architecture that exists only inside your head does not scale beyond you.**
+
+We'll learn why writing, diagrams, RFCs, documentation, disagreement, persuasion, and shared understanding are not "soft extras" to engineering.
+
+At Staff level, **communication itself becomes part of the technical system.**
